@@ -8,9 +8,25 @@ services:
       SERVER_NAME: ${SERVER_NAME:-servertest}
       STEAM_BRANCH: ${STEAM_BRANCH:-unstable}
       UPDATE_ON_START: ${UPDATE_ON_START:-true}
+      TZ: ${TZ:-America/Sao_Paulo}
+      BACKUP_ENABLED: ${BACKUP_ENABLED:-true}
+      BACKUP_TIME: ${BACKUP_TIME:-04:30}
+      BACKUP_LOCAL_DIR: /backups
+      BACKUP_TARGET_DIR: /backup-target
+      SHUTDOWN_GRACE_SECONDS: ${SHUTDOWN_GRACE_SECONDS:-180}
     volumes:
-      - ./server:/opt/pzserver
-      - ./data:/data
+      - type: bind
+        source: ./server
+        target: /opt/pzserver
+      - type: bind
+        source: ./data
+        target: /data
+      - type: bind
+        source: ./backups
+        target: /backups
+      - type: bind
+        source: ${BACKUP_TARGET_PATH:-./backup-target}
+        target: /backup-target
     ports:
       - "16261:16261/udp"
       - "16262-16272:16262-16272/udp"

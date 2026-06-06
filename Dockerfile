@@ -1,6 +1,7 @@
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Sao_Paulo
 
 RUN dpkg --add-architecture i386 \
     && apt-get update \
@@ -8,7 +9,9 @@ RUN dpkg --add-architecture i386 \
         bash \
         ca-certificates \
         curl \
+        gzip \
         tar \
+        tzdata \
         tini \
         util-linux \
         lib32gcc-s1 \
@@ -33,7 +36,8 @@ RUN curl -fsSL https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.t
     && chown -R steam:steam /opt/steamcmd
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh \
+    && chmod +x /entrypoint.sh
 
 EXPOSE 16261/udp
 EXPOSE 16262/udp

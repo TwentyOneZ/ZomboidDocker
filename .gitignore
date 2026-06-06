@@ -3,11 +3,14 @@
 
 data/
 server/
+backups/
+backup-target/
 
 logs/
 *.log
 *.out
 *.err
+*.tar.gz
 
 *.tmp
 *.temp
