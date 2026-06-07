@@ -18,6 +18,15 @@ services:
       SHUTDOWN_GRACE_SECONDS: ${SHUTDOWN_GRACE_SECONDS:-180}
       AUTO_DISABLE_UPNP: ${AUTO_DISABLE_UPNP:-true}
 
+    mem_limit: 10g
+    memswap_limit: 12g
+    shm_size: "1g"
+
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+
     volumes:
       - pz_server:/opt/pzserver
       - pz_data:/data
