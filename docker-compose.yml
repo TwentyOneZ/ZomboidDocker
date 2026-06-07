@@ -19,7 +19,7 @@ services:
       AUTO_DISABLE_UPNP: ${AUTO_DISABLE_UPNP:-true}
 
     mem_limit: 10g
-    memswap_limit: 12g
+    memswap_limit: 14g
     shm_size: "1g"
 
     ulimits:
