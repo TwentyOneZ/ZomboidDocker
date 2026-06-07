@@ -43,6 +43,7 @@ Copy-Item .env.example .env
 
 ```bash
 SERVER_NAME=Perspex
+ADMIN_PASSWORD=troque-esta-senha
 STEAM_BRANCH=unstable
 UPDATE_ON_START=true
 TZ=America/Sao_Paulo
@@ -172,6 +173,12 @@ WorkshopItems=123456789;987654321
 ```
 
 O valor em `Mods=` usa os IDs internos dos mods. O valor em `WorkshopItems=` usa os IDs numericos dos itens da Steam Workshop.
+
+A senha do usuario `admin` e passada pelo `.env` com:
+
+```bash
+ADMIN_PASSWORD=troque-esta-senha
+```
 
 ## Portas Recomendadas
 

@@ -2,6 +2,7 @@
 set -euo pipefail
 
 SERVER_NAME="${SERVER_NAME:-servertest}"
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-}"
 STEAM_BRANCH="${STEAM_BRANCH:-unstable}"
 UPDATE_ON_START="${UPDATE_ON_START:-true}"
 TZ="${TZ:-America/Sao_Paulo}"
@@ -23,6 +24,11 @@ export TZ
 
 echo "Starting Project Zomboid Dedicated Server"
 echo "Server name: ${SERVER_NAME}"
+if [[ -n "${ADMIN_PASSWORD}" ]]; then
+    echo "Admin password: configured"
+else
+    echo "Admin password: not configured"
+fi
 echo "Steam branch: ${STEAM_BRANCH}"
 echo "Update on start: ${UPDATE_ON_START}"
 echo "Timezone: ${TZ}"
@@ -124,11 +130,17 @@ server_is_alive() {
 }
 
 start_server() {
+    local server_args=(-servername "${SERVER_NAME}")
+
+    if [[ -n "${ADMIN_PASSWORD}" ]]; then
+        server_args+=(-adminpassword "${ADMIN_PASSWORD}")
+    fi
+
     cd "${SERVER_DIR}"
     chmod +x ./start-server.sh
 
     echo "Starting Project Zomboid process"
-    setsid runuser -u steam -- ./start-server.sh -servername "${SERVER_NAME}" &
+    setsid runuser -u steam -- ./start-server.sh "${server_args[@]}" &
     SERVER_PID="$!"
     echo "Project Zomboid process group started with pid ${SERVER_PID}"
 }
